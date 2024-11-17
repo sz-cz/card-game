@@ -1,0 +1,12 @@
+<mat-button-toggle-group
+  name="resources"
+  aria-label="Resources"
+  [value]="resourceType()"
+  (change)="valueChanged.emit($event.value)"
+>
+  @for (option of options; track $index) {
+  <mat-button-toggle [value]="option.value">{{
+    option.label
+  }}</mat-button-toggle>
+  }
+</mat-button-toggle-group>
