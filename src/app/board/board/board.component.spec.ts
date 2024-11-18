@@ -47,7 +47,7 @@ describe('BoardComponent', () => {
   });
 
   it('should not display cards placeholders, when cards data has already been fetched', () => {
-    peopleServiceMock.getRandomPeople.and.returnValue(
+    peopleServiceMock.getTwoRandomPeople.and.returnValue(
       of([mockPerson1, mockPerson2])
     );
 
@@ -66,7 +66,7 @@ describe('BoardComponent', () => {
   });
 
   it('should update cardLeft and cardRight signals when drawCards is called', () => {
-    peopleServiceMock.getRandomPeople.and.returnValue(
+    peopleServiceMock.getTwoRandomPeople.and.returnValue(
       of([mockPerson1, mockPerson2])
     );
 

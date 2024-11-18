@@ -29,7 +29,7 @@ describe('ScoreService', () => {
   });
 
   it('should update left score and set winner to left when left mass is greater', (done) => {
-    service.compareStrategicProperty('80', '60');
+    service.determineWinner('80', '60');
 
     service.leftPlayerScore$.subscribe((score) => {
       expect(score).toBe(1);
@@ -46,7 +46,7 @@ describe('ScoreService', () => {
   });
 
   it('should update right score and set winner to right when right mass is greater', (done) => {
-    service.compareStrategicProperty('50', '70');
+    service.determineWinner('50', '70');
 
     service.leftPlayerScore$.subscribe((score) => {
       expect(score).toBe(0);
@@ -63,7 +63,7 @@ describe('ScoreService', () => {
   });
 
   it('should not update scores and set winner to undefined when masses are equal', (done) => {
-    service.compareStrategicProperty('60', '60');
+    service.determineWinner('60', '60');
 
     service.leftPlayerScore$.subscribe((score) => {
       expect(score).toBe(0);
@@ -80,7 +80,7 @@ describe('ScoreService', () => {
   });
 
   it('should parse unknown as 0', (done) => {
-    service.compareStrategicProperty('1', 'unknown');
+    service.determineWinner('1', 'unknown');
 
     service.leftPlayerScore$.subscribe((score) => {
       expect(score).toBe(1);
@@ -97,7 +97,7 @@ describe('ScoreService', () => {
   });
 
   it('should not update scores and set winner to undefined when both masses are unknown', (done) => {
-    service.compareStrategicProperty('unknown', 'unknown');
+    service.determineWinner('unknown', 'unknown');
 
     service.leftPlayerScore$.subscribe((score) => {
       expect(score).toBe(0);
@@ -114,7 +114,7 @@ describe('ScoreService', () => {
   });
 
   it('should parse strings with comma and compare masses', (done) => {
-    service.compareStrategicProperty('1,123', '1122');
+    service.determineWinner('1,123', '1122');
 
     service.leftPlayerScore$.subscribe((score) => {
       expect(score).toBe(1);

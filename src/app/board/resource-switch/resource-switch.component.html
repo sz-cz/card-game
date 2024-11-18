@@ -2,7 +2,7 @@
   name="resources"
   aria-label="Resources"
   [value]="resourceType()"
-  (change)="valueChanged.emit($event.value)"
+  (change)="handleResourceTypeChanged($event.value)"
 >
   @for (option of options; track $index) {
   <mat-button-toggle [value]="option.value">{{

@@ -3,7 +3,7 @@ import {
   HttpTestingController,
   provideHttpClientTesting,
 } from '@angular/common/http/testing';
-import { PEOPLE_URL, PeopleService } from './people.service';
+import { RESOURCE_API_URL, PeopleService } from './people.service';
 import { ScoreService } from '..';
 import { mockPerson1, mockPerson2 } from '../../../shared';
 
@@ -35,18 +35,15 @@ describe('PeopleService', () => {
   });
 
   it('should fetch random people and call compareMass', (done) => {
-    service.getRandomPeople().subscribe((result) => {
+    service.getTwoRandomPeople().subscribe((result) => {
       expect(result).toEqual([mockPerson1, mockPerson2]);
 
-      expect(scoreServiceMock.compareStrategicProperty).toHaveBeenCalledWith(
-        '77',
-        '55'
-      );
+      expect(scoreServiceMock.determineWinner).toHaveBeenCalledWith('77', '55');
       done();
     });
 
-    const req1 = httpMock.expectOne(`${PEOPLE_URL}randomUid1`);
-    const req2 = httpMock.expectOne(`${PEOPLE_URL}randomUid2`);
+    const req1 = httpMock.expectOne(`${RESOURCE_API_URL}randomUid1`);
+    const req2 = httpMock.expectOne(`${RESOURCE_API_URL}randomUid2`);
 
     req1.flush(mockPerson1);
     req2.flush(mockPerson2);

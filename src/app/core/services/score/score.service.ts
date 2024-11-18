@@ -23,7 +23,7 @@ export class ScoreService {
     }
   }
 
-  compareStrategicProperty(leftProperty: string, rightProperty: string) {
+  determineWinner(leftProperty: string, rightProperty: string) {
     const leftCardProperty = parseStrategicProperty(leftProperty);
     const rightCardProperty = parseStrategicProperty(rightProperty);
 
@@ -34,6 +34,8 @@ export class ScoreService {
       this.#updateScore('right');
       this.#currentWinner.next('right');
     } else {
+      this.#updateScore('left');
+      this.#updateScore('right');
       this.#currentWinner.next(undefined);
     }
   }

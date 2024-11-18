@@ -1,6 +1,8 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { ResourceType } from '../../shared';
+import { ResourceType, UI_TEXTS } from '../../shared';
+import { ResourcesFacade } from '../../core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-resource-switch',
@@ -10,17 +12,21 @@ import { ResourceType } from '../../shared';
   styleUrl: './resource-switch.component.sass',
 })
 export class ResourceSwitchComponent {
-  resourceType = input.required<ResourceType>();
-  valueChanged = output<ResourceType>();
+  #resourcesFacade = inject(ResourcesFacade);
+  resourceType = toSignal(this.#resourcesFacade.currentResourceType$);
+
+  handleResourceTypeChanged(event: ResourceType) {
+    this.#resourcesFacade.setResourceType(event);
+  }
 
   options = [
     {
-      label: 'People',
-      value: 'people',
+      label: UI_TEXTS.people,
+      value: ResourceType.People,
     },
     {
-      label: 'Starships',
-      value: 'starships',
+      label: UI_TEXTS.starships,
+      value: ResourceType.Starships,
     },
   ];
 }

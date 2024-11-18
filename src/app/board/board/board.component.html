@@ -1,12 +1,12 @@
 <div class="wrapper">
-  <h1 class="title">Star Wars Game</h1>
+  <h1 class="title">{{ uiTexts.title }}</h1>
   <app-counter />
   <div class="board">
     <div class="board__half">
       @if (cardLeft()) {
       <app-card
         [properties]="cardLeft()!"
-        [isWinner]="(currentWinner$ | async) === 'left'"
+        [isWinner]="(currentWinner$ | async) !== 'right'"
       />
       } @else {
       <div class="placeholder" data-test="card-placeholder">Card A</div>
@@ -17,7 +17,7 @@
       @if (cardRight()) {
       <app-card
         [properties]="cardRight()!"
-        [isWinner]="(currentWinner$ | async) === 'right'"
+        [isWinner]="(currentWinner$ | async) !== 'left'"
       />
       } @else {
       <div class="placeholder" data-test="card-placeholder">Card B</div>
@@ -25,17 +25,14 @@
     </div>
   </div>
   <div class="settings">
-    <app-resource-switch
-      [resourceType]="resourceType()"
-      (valueChanged)="handleResourceTypeChanged($event)"
-    />
+    <app-resource-switch />
     <button
       mat-flat-button
       aria-label="Draw cards"
       (click)="drawCards()"
       data-test="draw-cards-button"
     >
-      Draw cards
+      {{ uiTexts.drawCardsButton }}
       <mat-icon aria-hidden="false" aria-label="Edit icon"
         >play_circle_field</mat-icon
       >
