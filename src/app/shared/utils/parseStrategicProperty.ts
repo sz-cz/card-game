@@ -1,4 +1,4 @@
-export function parseMass(mass: string | undefined): number {
+export function parseStrategicProperty(mass: string | undefined): number {
   if (!mass || mass === 'unknown') {
     return 0;
   }

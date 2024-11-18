@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { parseMass } from '../../../shared';
+import { parseStrategicProperty } from '../../../shared';
 
 @Injectable({
   providedIn: 'root',
@@ -23,14 +23,14 @@ export class ScoreService {
     }
   }
 
-  compareMass(leftMass: string, rightMass: string) {
-    const leftCardMass = parseMass(leftMass);
-    const rightCardMass = parseMass(rightMass);
+  compareStrategicProperty(leftProperty: string, rightProperty: string) {
+    const leftCardProperty = parseStrategicProperty(leftProperty);
+    const rightCardProperty = parseStrategicProperty(rightProperty);
 
-    if (leftCardMass > rightCardMass) {
+    if (leftCardProperty > rightCardProperty) {
       this.#updateScore('left');
       this.#currentWinner.next('left');
-    } else if (leftCardMass < rightCardMass) {
+    } else if (leftCardProperty < rightCardProperty) {
       this.#updateScore('right');
       this.#currentWinner.next('right');
     } else {

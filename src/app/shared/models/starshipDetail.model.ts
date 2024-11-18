@@ -17,3 +17,5 @@ export interface StarshipProperties extends ResourceProperties {
 }
 
 export type StarshipDetail = ResourceDetail<StarshipProperties>;
+
+export type StarshipPropertiesTuple = [StarshipProperties, StarshipProperties];

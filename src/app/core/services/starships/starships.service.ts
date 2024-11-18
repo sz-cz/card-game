@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, forkJoin, map, switchMap } from 'rxjs';
+import { Observable, forkJoin, map, switchMap, tap } from 'rxjs';
 import { inject } from '@angular/core';
 import {
   API_URL,
   ApiResponse,
   StarshipApiResponse,
-  StarshipDetail,
+  StarshipPropertiesTuple,
 } from '../../../shared';
 import { ScoreService } from '..';
 
@@ -17,7 +17,7 @@ const STARSHIPS_URL = `${API_URL}starships/`;
 })
 export class StarshipsService {
   #http = inject(HttpClient);
-  #stateService = inject(ScoreService);
+  #scoreService = inject(ScoreService);
   #availalbeUids: string[];
 
   #getStarships(params: HttpParams): Observable<ApiResponse> {
@@ -50,11 +50,21 @@ export class StarshipsService {
     return this.#http.get<StarshipApiResponse>(STARSHIPS_URL + randomUid);
   }
 
-  getRandomStarships(): Observable<[StarshipDetail, StarshipDetail]> {
+  getRandomStarships(): Observable<StarshipPropertiesTuple> {
     return forkJoin([
       this.#getRandomStarship(),
       this.#getRandomStarship(),
-    ]).pipe(map(([reps1, resp2]) => [reps1.result, resp2.result]));
+    ]).pipe(
+      map(
+        ([reps1, resp2]): StarshipPropertiesTuple => [
+          reps1.result.properties,
+          resp2.result.properties,
+        ]
+      ),
+      tap((resp) => {
+        this.#scoreService.compareStrategicProperty(resp[0].crew, resp[1].crew);
+      })
+    );
   }
 
   constructor() {

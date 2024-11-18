@@ -12,3 +12,5 @@ export interface PersonProperties extends ResourceProperties {
 }
 
 export type PersonDetail = ResourceDetail<PersonProperties>;
+
+export type PersonPropertiesTuple = [PersonProperties, PersonProperties];

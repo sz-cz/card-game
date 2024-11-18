@@ -38,7 +38,10 @@ describe('PeopleService', () => {
     service.getRandomPeople().subscribe((result) => {
       expect(result).toEqual([mockPerson1, mockPerson2]);
 
-      expect(scoreServiceMock.compareMass).toHaveBeenCalledWith('77', '55');
+      expect(scoreServiceMock.compareStrategicProperty).toHaveBeenCalledWith(
+        '77',
+        '55'
+      );
       done();
     });
 

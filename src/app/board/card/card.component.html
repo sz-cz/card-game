@@ -4,34 +4,91 @@
   </mat-card-header>
   <mat-card-content>
     <table class="card__table">
-      <tr>
-        <td class="card__table-header">Birth year</td>
-        <td>{{ properties().birth_year }}</td>
-      </tr>
-      <tr>
-        <td class="card__table-header">Gender</td>
-        <td>{{ properties().gender }}</td>
-      </tr>
-      <tr>
-        <td class="card__table-header">Height</td>
-        <td>{{ properties().height }}</td>
-      </tr>
-      <tr>
-        <td class="card__table-header">Mass</td>
-        <td>{{ properties().mass }}</td>
-      </tr>
-      <tr>
-        <td class="card__table-header">Hair color</td>
-        <td>{{ properties().hair_color }}</td>
-      </tr>
-      <tr>
-        <td class="card__table-header">Skin color</td>
-        <td>{{ properties().skin_color }}</td>
-      </tr>
-      <tr>
-        <td class="card__table-header">Eye color</td>
-        <td>{{ properties().eye_color }}</td>
-      </tr>
+      <ng-container
+        *ngTemplateOutlet="isPeopleMode() ? peopleTemplate : starshipTemplate"
+      ></ng-container>
     </table>
   </mat-card-content>
 </mat-card>
+
+<ng-template #peopleTemplate>
+  @if (personProperties(); as properties) {
+  <tr>
+    <td class="card__table-header">Birth year</td>
+    <td>{{ properties.birth_year }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Gender</td>
+    <td>{{ properties.gender }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Height</td>
+    <td>{{ properties.height }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Mass</td>
+    <td>{{ properties.mass }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Hair color</td>
+    <td>{{ properties.hair_color }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Skin color</td>
+    <td>{{ properties.skin_color }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Eye color</td>
+    <td>{{ properties.eye_color }}</td>
+  </tr>
+  }
+</ng-template>
+
+<ng-template #starshipTemplate>
+  @if (starshipProperties(); as properties) {
+  <tr>
+    <td class="card__table-header">Model</td>
+    <td>{{ properties.model }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Manufacturer</td>
+    <td>{{ properties.manufacturer }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Cost in credits</td>
+    <td>{{ properties.cost_in_credits }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Length</td>
+    <td>{{ properties.length }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Max speed</td>
+    <td>{{ properties.max_atmosphering_speed }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Crew</td>
+    <td>{{ properties.crew }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Passengers</td>
+    <td>{{ properties.passengers }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Cargo capacity</td>
+    <td>{{ properties.cargo_capacity }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Consumables</td>
+    <td>{{ properties.consumables }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Hyperdrive rating</td>
+    <td>{{ properties.hyperdrive_rating }}</td>
+  </tr>
+  <tr>
+    <td class="card__table-header">Starship class</td>
+    <td>{{ properties.starship_class }}</td>
+  </tr>
+  }
+</ng-template>

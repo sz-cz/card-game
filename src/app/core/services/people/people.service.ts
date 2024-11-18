@@ -6,7 +6,7 @@ import {
   API_URL,
   ApiResponse,
   PersonApiResponse,
-  PersonProperties,
+  PersonPropertiesTuple,
 } from '../../../shared';
 import { ScoreService } from '..';
 
@@ -17,7 +17,7 @@ export const PEOPLE_URL = `${API_URL}people/`;
 })
 export class PeopleService {
   #http = inject(HttpClient);
-  #stateService = inject(ScoreService);
+  #scoreService = inject(ScoreService);
   #availalbeUids: string[];
 
   #getPeople(params: HttpParams): Observable<ApiResponse> {
@@ -50,14 +50,16 @@ export class PeopleService {
     return this.#getPerson(randomUid);
   }
 
-  getRandomPeople(): Observable<[PersonProperties, PersonProperties]> {
+  getRandomPeople(): Observable<PersonPropertiesTuple> {
     return forkJoin([this.#getRandomPerson(), this.#getRandomPerson()]).pipe(
-      map(([resp1, resp2]): [PersonProperties, PersonProperties] => [
-        resp1.result.properties,
-        resp2.result.properties,
-      ]),
+      map(
+        ([resp1, resp2]): PersonPropertiesTuple => [
+          resp1.result.properties,
+          resp2.result.properties,
+        ]
+      ),
       tap((resp) => {
-        this.#stateService.compareMass(resp[0].mass, resp[1].mass);
+        this.#scoreService.compareStrategicProperty(resp[0].mass, resp[1].mass);
       })
     );
   }

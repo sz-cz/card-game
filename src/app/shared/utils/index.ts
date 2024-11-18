@@ -1,1 +1,1 @@
-export * from './parseMass';
+export * from './parseStrategicProperty';
