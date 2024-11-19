@@ -37,7 +37,7 @@ describe('CounterComponent', () => {
     fixture = TestBed.createComponent(CounterComponent);
     component = fixture.componentInstance;
     el = fixture.debugElement;
-    fixture.detectChanges(); // Początkowa detekcja zmian
+    fixture.detectChanges();
   });
 
   it('should create', () => {

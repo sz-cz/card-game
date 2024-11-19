@@ -9,7 +9,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [MatButtonToggleModule],
   templateUrl: './resource-switch.component.html',
-  styleUrl: './resource-switch.component.sass',
 })
 export class ResourceSwitchComponent {
   #resourcesFacade = inject(ResourcesFacade);

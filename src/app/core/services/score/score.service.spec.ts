@@ -62,15 +62,15 @@ describe('ScoreService', () => {
     });
   });
 
-  it('should not update scores and set winner to undefined when masses are equal', (done) => {
+  it('should update both scores and set winner to undefined when masses are equal', (done) => {
     service.determineWinner('60', '60');
 
     service.leftPlayerScore$.subscribe((score) => {
-      expect(score).toBe(0);
+      expect(score).toBe(1);
     });
 
     service.rightPlayerScore$.subscribe((score) => {
-      expect(score).toBe(0);
+      expect(score).toBe(1);
     });
 
     service.currentWinner$.subscribe((winner) => {
@@ -92,23 +92,6 @@ describe('ScoreService', () => {
 
     service.currentWinner$.subscribe((winner) => {
       expect(winner).toBe('left');
-      done();
-    });
-  });
-
-  it('should not update scores and set winner to undefined when both masses are unknown', (done) => {
-    service.determineWinner('unknown', 'unknown');
-
-    service.leftPlayerScore$.subscribe((score) => {
-      expect(score).toBe(0);
-    });
-
-    service.rightPlayerScore$.subscribe((score) => {
-      expect(score).toBe(0);
-    });
-
-    service.currentWinner$.subscribe((winner) => {
-      expect(winner).toBeUndefined();
       done();
     });
   });

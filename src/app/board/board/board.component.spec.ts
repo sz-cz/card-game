@@ -1,33 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import { BoardComponent } from './board.component';
-import { PeopleService, StarshipsService } from '../../core';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+import { ResourcesFacade, ScoreService } from '../../core';
+import { BehaviorSubject, of } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { mockPerson1, mockPerson2 } from '../../shared';
+import { ResourceType, mockPerson1, mockPerson2 } from '../../shared';
 
 describe('BoardComponent', () => {
   let fixture: ComponentFixture<BoardComponent>;
   let component: BoardComponent;
   let el: DebugElement;
-  let peopleServiceMock: jasmine.SpyObj<PeopleService>;
-  let starshipsServiceMock: jasmine.SpyObj<StarshipsService>;
+  let resourcesFacadeMock: jasmine.SpyObj<ResourcesFacade>;
+  let scoreServiceMock: jasmine.SpyObj<ScoreService>;
 
   beforeEach(() => {
-    peopleServiceMock = jasmine.createSpyObj('PeopleService', [
-      'getRandomPeople',
+    resourcesFacadeMock = jasmine.createSpyObj('ResourcesFacade', [
+      'drawResourcesAndDetermineWinner',
+      'currentResourceType$',
     ]);
-    starshipsServiceMock = jasmine.createSpyObj('StarshipsService', [
-      'getRandomStarship',
-    ]);
+    scoreServiceMock = jasmine.createSpyObj('ScoreService', ['currentWinner$']);
+
+    const currentResourceTypeSubject = new BehaviorSubject<ResourceType>(
+      ResourceType.People
+    );
+    Object.defineProperty(resourcesFacadeMock, 'currentResourceType$', {
+      get: () => currentResourceTypeSubject.asObservable(),
+    });
+
+    scoreServiceMock.currentWinner$ = new BehaviorSubject<
+      'left' | 'right' | undefined
+    >(undefined);
 
     TestBed.configureTestingModule({
       imports: [BoardComponent],
       providers: [
-        provideHttpClientTesting(),
-        { provide: PeopleService, useValue: peopleServiceMock },
-        { provide: StarshipsService, useValue: starshipsServiceMock },
+        { provide: ResourcesFacade, useValue: resourcesFacadeMock },
+        { provide: ScoreService, useValue: scoreServiceMock },
       ],
     });
 
@@ -47,7 +55,7 @@ describe('BoardComponent', () => {
   });
 
   it('should not display cards placeholders, when cards data has already been fetched', () => {
-    peopleServiceMock.getTwoRandomPeople.and.returnValue(
+    resourcesFacadeMock.drawResourcesAndDetermineWinner.and.returnValue(
       of([mockPerson1, mockPerson2])
     );
 
@@ -55,18 +63,14 @@ describe('BoardComponent', () => {
     fixture.detectChanges();
 
     const placeholders = el.queryAll(By.css('.placeholder'));
-    expect(placeholders.length)
-      .withContext('Placeholders should not be rendered')
-      .toEqual(0);
+    expect(placeholders.length).toEqual(0);
 
     const cards = el.queryAll(By.css('app-card'));
-    expect(cards.length)
-      .withContext('Card components should be rendered')
-      .toEqual(2);
+    expect(cards.length).toEqual(2);
   });
 
   it('should update cardLeft and cardRight signals when drawCards is called', () => {
-    peopleServiceMock.getTwoRandomPeople.and.returnValue(
+    resourcesFacadeMock.drawResourcesAndDetermineWinner.and.returnValue(
       of([mockPerson1, mockPerson2])
     );
 

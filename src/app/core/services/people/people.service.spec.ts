@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import {
   HttpTestingController,
-  provideHttpClientTesting,
+  HttpClientTestingModule,
 } from '@angular/common/http/testing';
-import { RESOURCE_API_URL, PeopleService } from './people.service';
+
+import { PEOPLE_API_URL, PeopleService } from './people.service';
 import { ScoreService } from '..';
 import { mockPerson1, mockPerson2 } from '../../../shared';
 
@@ -16,10 +17,8 @@ describe('PeopleService', () => {
     scoreServiceMock = jasmine.createSpyObj('ScoreService', ['compareMass']);
 
     TestBed.configureTestingModule({
-      providers: [
-        provideHttpClientTesting(),
-        { provide: ScoreService, useValue: scoreServiceMock },
-      ],
+      imports: [HttpClientTestingModule],
+      providers: [{ provide: ScoreService, useValue: scoreServiceMock }],
     });
 
     service = TestBed.inject(PeopleService);
@@ -30,20 +29,19 @@ describe('PeopleService', () => {
     httpMock.verify();
   });
 
-  it('should be created', () => {
+  it('should be created and initialize with request for total records', () => {
     expect(service).toBeTruthy();
+    httpMock.expectOne('https://www.swapi.tech/api/people/?page=1&limit=1');
   });
 
-  it('should fetch random people and call compareMass', (done) => {
+  it('should fetch random people', (done) => {
     service.getTwoRandomPeople().subscribe((result) => {
       expect(result).toEqual([mockPerson1, mockPerson2]);
-
-      expect(scoreServiceMock.determineWinner).toHaveBeenCalledWith('77', '55');
       done();
     });
 
-    const req1 = httpMock.expectOne(`${RESOURCE_API_URL}randomUid1`);
-    const req2 = httpMock.expectOne(`${RESOURCE_API_URL}randomUid2`);
+    const req1 = httpMock.expectOne(`${PEOPLE_API_URL}randomUid1`);
+    const req2 = httpMock.expectOne(`${PEOPLE_API_URL}randomUid2`);
 
     req1.flush(mockPerson1);
     req2.flush(mockPerson2);

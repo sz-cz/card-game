@@ -5,8 +5,10 @@
   (change)="handleResourceTypeChanged($event.value)"
 >
   @for (option of options; track $index) {
-  <mat-button-toggle [value]="option.value">{{
-    option.label
-  }}</mat-button-toggle>
+  <mat-button-toggle
+    [value]="option.value"
+    [attr.data-test]="option.label + '-switch-button'"
+    >{{ option.label }}</mat-button-toggle
+  >
   }
 </mat-button-toggle-group>

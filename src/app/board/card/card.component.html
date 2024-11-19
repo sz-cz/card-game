@@ -26,8 +26,8 @@
     <td>{{ properties.height }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Mass</td>
-    <td>{{ properties.mass }}</td>
+    <td class="card__table-header" data-test="mass">Mass</td>
+    <td data-test="mass-value">{{ properties.mass }}</td>
   </tr>
   <tr>
     <td class="card__table-header">Hair color</td>
@@ -67,7 +67,7 @@
     <td>{{ properties.max_atmosphering_speed }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Crew</td>
+    <td class="card__table-header" data-test="crew">Crew</td>
     <td>{{ properties.crew }}</td>
   </tr>
   <tr>
