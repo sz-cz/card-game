@@ -1,73 +1,63 @@
 import { TestBed } from '@angular/core/testing';
 import {
   HttpTestingController,
-  HttpClientTestingModule,
+  provideHttpClientTesting,
 } from '@angular/common/http/testing';
 import { StarshipsService } from './starships.service';
-import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
-import { mockStarship1, mockStarship2 } from '../../../shared';
+import { provideHttpClient } from '@angular/common/http';
+import {
+  STARSHIPS_URL,
+  mockStarship1,
+  mockStarship2,
+  mockStarshipResp1,
+  mockStarshipResp2,
+} from '../../../shared';
 
 describe('StarshipsService', () => {
-  let service: StarshipsService;
-  let httpMock: HttpTestingController;
-  let httpClient: HttpClient;
-
-  const mockAvailableUids = ['uid1', 'uid2'];
+  let service: StarshipsService, httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
-        StarshipsService,
-        {
-          provide: HttpClient,
-          useClass: class {
-            get = jasmine
-              .createSpy()
-              .and.returnValue(of({ results: mockAvailableUids }));
-          },
-        },
-      ],
+      imports: [],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     service = TestBed.inject(StarshipsService);
-    httpMock = TestBed.inject(HttpTestingController);
-
-    service['availalbeUids$'].next(mockAvailableUids);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
 
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should fetch two random starships', (done) => {
-    const starship1 = { result: { properties: mockStarship1 } };
-    const starship2 = { result: { properties: mockStarship2 } };
+  it('should retrieve and return two random starships', () => {
+    const mockUidList = ['3', '9', '15'];
 
-    service
-      .getTwoRandomStarships()
-      .subscribe(([starship1Properties, starship2Properties]) => {
-        expect(starship1Properties.name).toBe('X-Wing');
-        expect(starship2Properties.name).toBe('TIE Fighter');
-        done();
-      });
-
-    const req1 = httpMock.expectOne(
-      'https://www.swapi.tech/api/starships/uid1'
+    const mockTotalRecords = 3;
+    const totalRecordsReq = httpTestingController.expectOne(
+      `${STARSHIPS_URL}?page=1&limit=1`
     );
-    expect(req1.request.method).toBe('GET');
-    req1.flush(starship1);
+    totalRecordsReq.flush({ total_records: mockTotalRecords });
 
-    const req2 = httpMock.expectOne(
-      'https://www.swapi.tech/api/starships/uid2'
+    const availableUidsReq = httpTestingController.expectOne(
+      `${STARSHIPS_URL}?page=1&limit=${mockTotalRecords}`
     );
-    expect(req2.request.method).toBe('GET');
-    req2.flush(starship2);
+    availableUidsReq.flush({
+      results: mockUidList.map((uid) => ({ uid })),
+    });
 
-    httpMock.verify();
-  });
+    spyOn(Math, 'random').and.returnValues(0.1, 0.9); // Faking random to get first and last item from uid array
 
-  afterEach(() => {
-    httpMock.verify();
+    service.getTwoRandomStarships().subscribe(([starship1, starship2]) => {
+      expect(starship1.name).toBe(mockStarship1.name);
+      expect(starship2.name).toBe(mockStarship2.name);
+    });
+
+    const req1 = httpTestingController.expectOne(STARSHIPS_URL + '3');
+    req1.flush(mockStarshipResp1);
+
+    const req2 = httpTestingController.expectOne(STARSHIPS_URL + '15');
+    req2.flush(mockStarshipResp2);
+
+    httpTestingController.verify();
   });
 });

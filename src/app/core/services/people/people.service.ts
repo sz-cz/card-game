@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, map, switchMap } from 'rxjs';
 import {
-  API_URL,
+  PEOPLE_API_URL,
   PersonApiResponse,
   PersonPropertiesTuple,
 } from '../../../shared';
 import { ResourcesBaseService } from '../resources-base/resources-base.service';
-
-export const PEOPLE_API_URL = `${API_URL}people/`;
 
 @Injectable({
   providedIn: 'root',

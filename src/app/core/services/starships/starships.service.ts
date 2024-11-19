@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin, map, switchMap } from 'rxjs';
 import {
   API_URL,
+  STARSHIPS_URL,
   StarshipApiResponse,
   StarshipPropertiesTuple,
 } from '../../../shared';
 import { ResourcesBaseService } from '../resources-base/resources-base.service';
-
-const STARSHIPS_URL = `${API_URL}starships/`;
 
 @Injectable({
   providedIn: 'root',

@@ -6,9 +6,11 @@
     padding: 36px
 
 .title
-    font-size: 48px
-    font-weight: 500
-    color: yellow
+    font-size: 52px
+    font-weight: 700
+    color: black
+    text-transform: uppercase
+    text-shadow: -1px -1px 0 yellow, 1px -1px 0 yellow, -1px 1px 0 yellow, 1px 1px 0 yellow
     
 .board
     display: flex
@@ -23,20 +25,26 @@
         flex-basis: 50%
 
     &__separator
-        border-left: 2px dashed white
+        border-left: 2px dashed yellow
 
 .settings
     display: flex
     justify-content: center
     gap: 24px
     width: 100%
-    border-top: 1px solid white
+    border-top: 1px solid yellow
     margin: 24px 0
     padding: 24px
 
 .placeholder
+    display: flex
+    justify-content: center
+    align-items: center
     color: gray
     padding: 24px
+    height: 200px
+    width: 140px
+    font-size: 24px
     border: 1px dashed gray
     border-radius: 6px
 

@@ -1,4 +1,4 @@
-import { StarshipProperties } from '..';
+import { StarshipApiResponse, StarshipProperties } from '..';
 
 export const mockStarship1: StarshipProperties = {
   name: 'X-Wing',
@@ -38,4 +38,25 @@ export const mockStarship2: StarshipProperties = {
   created: '',
   edited: '',
   url: '',
+};
+
+export const mockStarshipResp1: StarshipApiResponse = {
+  message: 'ok',
+  result: {
+    properties: mockStarship1,
+    description: 'A Starship',
+    _id: '5f63a34fee9fd7000499be21',
+    uid: '9',
+    __v: 0,
+  },
+};
+export const mockStarshipResp2: StarshipApiResponse = {
+  message: 'ok',
+  result: {
+    properties: mockStarship2,
+    description: 'A Starship',
+    _id: '5f63a34fee9fd7000499be21',
+    uid: '3',
+    __v: 0,
+  },
 };
