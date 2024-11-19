@@ -1,23 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DebugElement, signal, ComponentRef } from '@angular/core';
+import { DebugElement, ComponentRef } from '@angular/core';
 import { CardComponent } from './card.component';
 import { By } from '@angular/platform-browser';
-import { PersonProperties } from '../../shared';
-
-const mockProperties: PersonProperties = {
-  name: 'John Doe',
-  birth_year: '1990',
-  gender: 'male',
-  height: '180',
-  mass: '75',
-  hair_color: 'brown',
-  skin_color: 'fair',
-  eye_color: 'blue',
-  created: '',
-  edited: '',
-  homeworld: '',
-  url: '',
-};
+import { mockPerson1 } from '../../shared';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -34,7 +19,7 @@ describe('CardComponent', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
     el = fixture.debugElement;
-    componentRef.setInput('properties', mockProperties);
+    componentRef.setInput('properties', mockPerson1);
 
     fixture.detectChanges();
   });
@@ -47,12 +32,12 @@ describe('CardComponent', () => {
     const nameElement = fixture.debugElement.query(
       By.css('mat-card-title')
     ).nativeElement;
-    expect(nameElement.textContent.trim()).toBe(mockProperties.name);
+    expect(nameElement.textContent.trim()).toBe(mockPerson1.name);
 
     const birthYearCell = fixture.debugElement.queryAll(
       By.css('.card__table td')
     )[1].nativeElement;
-    expect(birthYearCell.textContent.trim()).toBe(mockProperties.birth_year);
+    expect(birthYearCell.textContent.trim()).toBe(mockPerson1.birth_year);
   });
 
   it('should add "card--winner" class when isWinner is true', () => {
