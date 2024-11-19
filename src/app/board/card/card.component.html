@@ -26,8 +26,12 @@
     <td class="card__table-cell">{{ properties.height }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">{{ uiTexts.peopleTemplate.mass }}</td>
-    <td class="card__table-cell">{{ properties.mass }}</td>
+    <td class="card__table-header" data-test="mass">
+      {{ uiTexts.peopleTemplate.mass }}
+    </td>
+    <td class="card__table-cell" data-test="mass-value">
+      {{ properties.mass }}
+    </td>
   </tr>
   <tr>
     <td class="card__table-header">{{ uiTexts.peopleTemplate.hairColor }}</td>
@@ -71,7 +75,9 @@
     <td class="card__table-cell">{{ properties.max_atmosphering_speed }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">{{ uiTexts.starshipTemplate.crew }}</td>
+    <td class="card__table-header" data-test="crew">
+      {{ uiTexts.starshipTemplate.crew }}
+    </td>
     <td class="card__table-cell">{{ properties.crew }}</td>
   </tr>
   <tr>
