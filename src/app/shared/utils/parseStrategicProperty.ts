@@ -1,8 +1,8 @@
-export function parseStrategicProperty(mass: string | undefined): number {
-  if (!mass || mass === 'unknown') {
+export function parseStrategicProperty(property: string | undefined): number {
+  if (!property || property === 'unknown') {
     return 0;
   }
 
-  const numericValue = parseFloat(mass.replace(/,/g, ''));
+  const numericValue = parseFloat(property.replace(/,/g, ''));
   return isNaN(numericValue) ? 0 : numericValue;
 }
