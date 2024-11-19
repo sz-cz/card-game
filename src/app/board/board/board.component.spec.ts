@@ -76,7 +76,7 @@ describe('BoardComponent', () => {
 
     component.drawCards();
 
-    expect(component.cardLeft()).toEqual(mockPerson1);
-    expect(component.cardRight()).toEqual(mockPerson2);
+    expect(component.cardLeftData()).toEqual(mockPerson1);
+    expect(component.cardRightData()).toEqual(mockPerson2);
   });
 });

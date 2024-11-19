@@ -14,31 +14,31 @@
 <ng-template #peopleTemplate>
   @if (personProperties(); as properties) {
   <tr>
-    <td class="card__table-header">Birth year</td>
+    <td class="card__table-header">{{ uiTexts.peopleTemplate.birthYear }}</td>
     <td>{{ properties.birth_year }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Gender</td>
+    <td class="card__table-header">{{ uiTexts.peopleTemplate.gender }}</td>
     <td>{{ properties.gender }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Height</td>
+    <td class="card__table-header">{{ uiTexts.peopleTemplate.height }}</td>
     <td>{{ properties.height }}</td>
   </tr>
   <tr>
-    <td class="card__table-header" data-test="mass">Mass</td>
-    <td data-test="mass-value">{{ properties.mass }}</td>
+    <td class="card__table-header">{{ uiTexts.peopleTemplate.mass }}</td>
+    <td>{{ properties.mass }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Hair color</td>
+    <td class="card__table-header">{{ uiTexts.peopleTemplate.hairColor }}</td>
     <td>{{ properties.hair_color }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Skin color</td>
+    <td class="card__table-header">{{ uiTexts.peopleTemplate.skinColor }}</td>
     <td>{{ properties.skin_color }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Eye color</td>
+    <td class="card__table-header">{{ uiTexts.peopleTemplate.eyeColor }}</td>
     <td>{{ properties.eye_color }}</td>
   </tr>
   }
@@ -47,47 +47,61 @@
 <ng-template #starshipTemplate>
   @if (starshipProperties(); as properties) {
   <tr>
-    <td class="card__table-header">Model</td>
+    <td class="card__table-header">{{ uiTexts.starshipTemplate.model }}</td>
     <td>{{ properties.model }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Manufacturer</td>
+    <td class="card__table-header">
+      {{ uiTexts.starshipTemplate.manufacturer }}
+    </td>
     <td>{{ properties.manufacturer }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Cost in credits</td>
+    <td class="card__table-header">
+      {{ uiTexts.starshipTemplate.costInCredits }}
+    </td>
     <td>{{ properties.cost_in_credits }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Length</td>
+    <td class="card__table-header">{{ uiTexts.starshipTemplate.length }}</td>
     <td>{{ properties.length }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Max speed</td>
+    <td class="card__table-header">{{ uiTexts.starshipTemplate.maxSpeed }}</td>
     <td>{{ properties.max_atmosphering_speed }}</td>
   </tr>
   <tr>
-    <td class="card__table-header" data-test="crew">Crew</td>
+    <td class="card__table-header">{{ uiTexts.starshipTemplate.crew }}</td>
     <td>{{ properties.crew }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Passengers</td>
+    <td class="card__table-header">
+      {{ uiTexts.starshipTemplate.passengers }}
+    </td>
     <td>{{ properties.passengers }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Cargo capacity</td>
+    <td class="card__table-header">
+      {{ uiTexts.starshipTemplate.cargoCapacity }}
+    </td>
     <td>{{ properties.cargo_capacity }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Consumables</td>
+    <td class="card__table-header">
+      {{ uiTexts.starshipTemplate.consumables }}
+    </td>
     <td>{{ properties.consumables }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Hyperdrive rating</td>
+    <td class="card__table-header">
+      {{ uiTexts.starshipTemplate.hyperdriveRating }}
+    </td>
     <td>{{ properties.hyperdrive_rating }}</td>
   </tr>
   <tr>
-    <td class="card__table-header">Starship class</td>
+    <td class="card__table-header">
+      {{ uiTexts.starshipTemplate.starshipClass }}
+    </td>
     <td>{{ properties.starship_class }}</td>
   </tr>
   }

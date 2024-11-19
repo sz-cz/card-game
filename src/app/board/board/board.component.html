@@ -3,24 +3,28 @@
   <app-counter />
   <div class="board">
     <div class="board__half">
-      @if (cardLeft()) {
+      @if (cardLeftData()) {
       <app-card
-        [properties]="cardLeft()!"
-        [isWinner]="(currentWinner$ | async) !== 'right'"
+        [properties]="cardLeftData()!"
+        [isWinner]="currentWinner() !== 'right'"
       />
       } @else {
-      <div class="placeholder" data-test="card-placeholder">Card A</div>
+      <div class="placeholder" data-test="card-placeholder">
+        {{ uiTexts.cardA }}
+      </div>
       }
     </div>
     <div class="board__separator"></div>
     <div class="board__half">
-      @if (cardRight()) {
+      @if (cardRightData()) {
       <app-card
-        [properties]="cardRight()!"
-        [isWinner]="(currentWinner$ | async) !== 'left'"
+        [properties]="cardRightData()!"
+        [isWinner]="currentWinner() !== 'left'"
       />
       } @else {
-      <div class="placeholder" data-test="card-placeholder">Card B</div>
+      <div class="placeholder" data-test="card-placeholder">
+        {{ uiTexts.cardB }}
+      </div>
       }
     </div>
   </div>

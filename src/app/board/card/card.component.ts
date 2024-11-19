@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { PersonProperties, StarshipProperties } from '../../shared';
+import { PersonProperties, StarshipProperties, UI_TEXTS } from '../../shared';
 import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
@@ -14,6 +14,7 @@ import { NgTemplateOutlet } from '@angular/common';
 export class CardComponent {
   properties = input.required<PersonProperties | StarshipProperties>();
   isWinner = input<boolean>(false);
+  uiTexts = UI_TEXTS;
 
   personProperties = computed(() => this.properties() as PersonProperties);
   starshipProperties = computed(() => this.properties() as StarshipProperties);

@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { mockStarship1, mockStarship2 } from '../../../shared';
 
-fdescribe('StarshipsService', () => {
+describe('StarshipsService', () => {
   let service: StarshipsService;
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;

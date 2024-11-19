@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ScoreService, ResourcesFacade } from '../../core';
@@ -6,8 +7,7 @@ import { PersonProperties, StarshipProperties, UI_TEXTS } from '../../shared';
 import { CardComponent } from '../card/card.component';
 import { CounterComponent } from '../counter/counter.component';
 import { ResourceSwitchComponent } from '../resource-switch/resource-switch.component';
-import { AsyncPipe } from '@angular/common';
-import { shareReplay, take } from 'rxjs';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -18,7 +18,6 @@ import { shareReplay, take } from 'rxjs';
     CardComponent,
     CounterComponent,
     ResourceSwitchComponent,
-    AsyncPipe,
   ],
   templateUrl: './board.component.html',
   styleUrl: './board.component.sass',
@@ -26,11 +25,11 @@ import { shareReplay, take } from 'rxjs';
 export class BoardComponent {
   #scoreService = inject(ScoreService);
   #resourcesFacade = inject(ResourcesFacade);
-  currentWinner$ = this.#scoreService.currentWinner$.pipe(shareReplay());
-  cardLeft = signal<PersonProperties | StarshipProperties | undefined>(
+  currentWinner = toSignal(this.#scoreService.currentWinner$);
+  cardLeftData = signal<PersonProperties | StarshipProperties | undefined>(
     undefined
   );
-  cardRight = signal<PersonProperties | StarshipProperties | undefined>(
+  cardRightData = signal<PersonProperties | StarshipProperties | undefined>(
     undefined
   );
   uiTexts = UI_TEXTS;
@@ -40,8 +39,8 @@ export class BoardComponent {
       .drawResourcesAndDetermineWinner()
       .pipe(take(1))
       .subscribe(([resource1, resource2]) => {
-        this.cardLeft.set(resource1);
-        this.cardRight.set(resource2);
+        this.cardLeftData.set(resource1);
+        this.cardRightData.set(resource2);
       });
   }
 }
